@@ -10,8 +10,7 @@ RUN chmod +x ./genkeys.sh
 RUN ./genkeys.sh
 
 COPY ./service /tara-mock/service
-RUN cp /genkeys/generated/service/* /tara-mock/service/vault/
-
 WORKDIR /tara-mock/service
+RUN cp /genkeys/generated/service/* vault
 
 CMD ["go", "run", ".", "-conf", "./config.json"]
