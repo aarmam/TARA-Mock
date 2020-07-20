@@ -17,8 +17,8 @@ openssl req \
   -new \
   -x509 \
   -newkey rsa:2048 \
-  -keyout rootCA.key \
-  -out rootCA.pem \
+  -keyout root_ca.key \
+  -out root_ca.pem \
   -nodes \
   -days 1024 \
   -subj "/C=EE/ST=/L=/O=TEST-CA/CN=TEST-CA"
@@ -26,7 +26,7 @@ openssl req \
 # Kuva subject ja issuer
 echo -e "${RED}--- Valmistatud CA sert:${NC}"
 openssl x509 \
-  -in rootCA.pem \
+  -in root_ca.pem \
   -noout \
   -subject -issuer
 
@@ -45,8 +45,8 @@ openssl req \
 openssl x509 \
   -req \
   -in https.crs \
-  -CA rootCA.pem \
-  -CAkey rootCA.key \
+  -CA root_ca.pem \
+  -CAkey root_ca.key \
   -CAcreateserial \
   -out https.crt \
   -days 500 \
@@ -62,32 +62,34 @@ openssl x509 \
   -subject -issuer
 
 echo -e "${RED} "
-echo -e "--- 3 Genereerin identsustõendi allkirjastamise privaat- ja avaliku võtme${NC}"
+echo -e "--- 3 Genereerin identsustõendi allkirjastamise privaa t- ja avaliku võtme${NC}"
 openssl genrsa \
-  -out idtoken.key \
+  -out id_token_issuer.key \
   2048
 openssl rsa \
-  -in idtoken.key \
-  -pubout > idtoken.pub
+  -in id_token_issuer.key \
+  -pubout > id_token_issuer.pub
 
 echo -e "${RED} "
 echo -e "--- 4 Eemaldan vanad võtmed ja serdid${NC}"
-rm -f ../service/vault/*.*
-rm -f ../client/vault/*.*
+rm -f /generated/service/*.*
+rm -f /generated/client/*.*
 
 echo -e "${RED} "
 echo -e "--- 5 Paigaldan võtmed ja serdid TARA-Mock-i${NC}"
-cp rootCA.pem ../service/vault
-cp https.key ../service/vault
-cp https.crt ../service/vault
-cp idtoken.key ../service/vault
-cp idtoken.pub ../service/vault
+mkdir -p generated/service
+cp root_ca.pem generated/service
+cp https.key generated/service
+cp https.crt generated/service
+cp id_token_issuer.key generated/service
+cp id_token_issuer.pub generated/service
 
 echo -e "${RED} "
 echo -e "--- 6 Paigaldan võtmed ja serdid klientrakendusse${NC}"
-cp rootCA.pem ../client/vault
-cp https.key ../client/vault
-cp https.crt ../client/vault
+mkdir -p generated/client
+cp root_ca.pem generated/client
+cp https.key generated/client
+cp https.crt generated/client
 
 echo -e "${RED}--- Võtmed ja serdid genereeritud ja paigaldatud"
 echo -e "--- Ära unusta sirvikusse usaldusankrut paigaldada${NC}"

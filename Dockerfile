@@ -4,8 +4,7 @@ RUN apk update && apk upgrade && \
     apk add --no-cache bash openssl
 
 COPY ./service /tara-mock/service
-COPY ./config/certs /tara-mock/service/vault
-COPY ./config/config.json /tara-mock/service/config.json
+COPY ./genkeys/generated/service /tara-mock/service/vault
 
 WORKDIR /tara-mock/service
 
