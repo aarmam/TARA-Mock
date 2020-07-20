@@ -54,6 +54,7 @@ func main() {
 	http.HandleFunc("/", landingPage)
 	http.HandleFunc("/health", healthCheck)
 	http.HandleFunc("/oidc/.well-known/openid-configuration", sendConf)
+	http.HandleFunc("/.well-known/openid-configuration", sendConf)
 	http.HandleFunc("/oidc/authorize", authenticateUser)
 	http.HandleFunc("/back", sendUserBack)
 	http.HandleFunc("/oidc/token", sendIdentityToken)
