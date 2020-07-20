@@ -2,19 +2,9 @@ version: "3.8"
 
 services:
 
-  tara-genkeys:
-    build:
-      context: .
-      dockerfile: Dockerfile.genkeys
-    volumes:
-      - ./genkeys/generated:/generated
-    command: sh -c 'cp -R /genkeys/generated /'
-
   tara-mock:
     container_name: tara-mock
     image: aarmam/tara-mock:latest
     build: .
-    depends_on:
-      - tara-genkeys
     ports:
       - "0.0.0.0:8080:8080"
