@@ -37,7 +37,7 @@ func loadIdentities(f string) []Identity {
 	}
 	log.Info("Loaded identities/Loetud identiteedid:")
 	for _, id := range d {
-		log.Infof("	%s, %s, %s", id.Isikukood, id.Eesnimi, id.Perekonnanimi)
+		log.Infof("%s, %s, %s", id.Isikukood, id.Eesnimi, id.Perekonnanimi)
 	}
 	return d
 }
