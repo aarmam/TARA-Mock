@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+
+  tara-mock:
+    container_name: tara-mock
+    image: aarmam/tara-mock:latest
+    build: .
+    ports:
+      - "0.0.0.0:8084:8084"
