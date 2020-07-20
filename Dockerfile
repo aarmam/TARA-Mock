@@ -5,12 +5,12 @@ RUN apk update && apk upgrade && \
 
 COPY ./genkeys /genkeys
 WORKDIR /genkeys
-
 RUN chmod +x ./genkeys.sh
 RUN ./genkeys.sh
 
 COPY ./service /tara-mock/service
-WORKDIR /tara-mock/service
-RUN cp /genkeys/generated/service/* /tara-mock/service/vault
+WORKDIR /tara-mock/service/vault
+RUN cp /genkeys/generated/service/* .
 
+WORKDIR /tara-mock/service
 CMD ["go", "run", ".", "-conf", "./config.json"]
