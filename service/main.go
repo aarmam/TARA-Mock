@@ -36,7 +36,7 @@ type forTokenType struct {
 // Identsustõendite hoidla
 var idToendid = make(map[volituskood]forTokenType)
 
-var mutex = &sync.Mutex{}
+var mutex = &sync.RWMutex{}
 
 func main() {
 
